@@ -328,7 +328,12 @@ void typetesting() {
 }
 
 
-memz
+void memz() {
+
+    int myage = 20;
+    printf("%p\n", &myage);
+
+}
 
 int main() {
 
@@ -343,6 +348,8 @@ int main() {
     strengu();
     userinput();
     */
+
+    memz();
 
 
 
