@@ -1,0 +1,10 @@
+## The first three lines must not be changed, they are there to ignore all extensionless files.
+# The first line ignores all files without an extension
+# The second line whitelists all directories
+# The third line whitelists all files with an extension
+*
+!/**/
+!*.*
+tempCodeRunnerFile.c
+.vscode
+
