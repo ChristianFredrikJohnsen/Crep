@@ -1,7 +1,8 @@
-#include <stdio.h>
-#include <string.h>
-#include <wchar.h>
-#include <locale.h>
+#include <stdio.h> // printf, scanf (input/output)
+#include <string.h> // strlen, strcpy, strcat, strcmp
+#include <wchar.h> // Allows us to print special characters (like the norwegian characters)
+#include <locale.h> // Needed for the wchartesting function (Don't know what it does yet)
+#include <math.h> // pow, sqrt, abs, ceil, floor, round
 
 void matprint(short mat[][4], short row, short col) {
     printf("Element at point (%d, %d): %d\n", row, col, *(*(mat + row - 1) + col - 1));
@@ -327,12 +328,140 @@ void typetesting() {
     // You can quickly tell that something has gone wrong, since an unsigned short shall never be negative.
 }
 
+void pointz() {
 
-void memz() {
+    short myage = 20;
+    printf("Value stored: %hd\n", myage);
+    printf("Memory address: %p\n", &myage);
+    
+    short *ptr = &myage;
+    printf("Pointer: %p\n", ptr);
+    printf("Memory address of short: %p\n", &myage);
 
-    int myage = 20;
-    printf("%p\n", &myage);
+    printf("Value stored %hd\n", *ptr);
 
+    short numbers[4] = {25, 50, 75, 100};
+    for (int i = 0; i < sizeof(numbers) / sizeof(*numbers); i++) {
+        printf("Number number %d: %d\n", i + 1, numbers[i]);
+    }
+
+    printf("Printing the numbers using pointers:\n");
+    for (int i = 0; i < sizeof(numbers) / sizeof(*numbers); i++) {
+        printf("Number number %d: %d\n", i + 1, *(numbers + i));
+    }
+
+
+    for (int i = 0; i < sizeof(numbers) / sizeof(*numbers); i++) {
+        printf("Number number %d: %p\n", i + 1, &numbers[i]);
+    }
+
+
+
+    printf("Number of addresses per element: %zu\n", sizeof(*numbers));
+    
+    short niceNumbers[4] = {5, 10, 15, 20};
+    *niceNumbers = 10;
+    *(niceNumbers + 2) = 10;
+    printf("%d\n", *niceNumbers);
+
+    for (int i = 0; i < sizeof(niceNumbers) / sizeof(*niceNumbers); i++) {
+        printf("Index %d: %d\n", i + 1, niceNumbers[i]);
+    }
+
+    printf("Accessing an invalid index: %d\n", niceNumbers[4]); // This will print a random number, since we are accessing memory which is not allocated to the array.
+
+    // Wonder what happens now
+    *(niceNumbers + 4) = 10; // Undefined behavior, stack smashing is detected
+    printf("%d\n", *(niceNumbers + 4)); // The program terminates before this line is reached.
+
+}
+
+
+void name(char name[]) {
+    printf("Hello %s!\n", name);
+}
+
+void nameAge(char name[], short age) {
+    printf("Hello %s! You are %hd years old.\n", name, age);
+}
+
+void arrayNumz(short numbers[5]) {
+    printf("These are your five favorite numbers:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Number %hd: %hd\n", i + 1, numbers[i]);
+    }
+}
+
+short transformation(short number) {
+    return number * 2 + 7;
+}
+
+short multiplication(short a, short b) {
+    return a * b;
+}
+
+short division(short, short);
+
+short rangeSum(short, short);
+
+/* 
+This is considered good practice, since it becomes easier to get an overview of the functions which are used in the program.
+Usually, you would have a program where the functions are declared at the top, so that you can see what functions are used in the program.
+When working on a larger project, this can be quite useful.
+The declarations would be some sort of "table of contents" for the program.
+
+The setup is:
+
+1) Declarations
+2) Main function
+3) Definitions (of the functions you declared in the beginning)
+*/
+
+void functions() {
+
+    char myName[] = "Christian Fredrik Johnsen";
+    short age = 20;
+    short myNumbers[5] = {41, 20, 30, 40, 50};
+
+    name(myName);
+    nameAge(myName, 20);
+    arrayNumz(myNumbers);
+    
+    short result = transformation(*myNumbers);
+    printf("The result is: %hd\n", result);
+    printf("%hd * %hd = %hd\n", myNumbers[0], myNumbers[1], multiplication(myNumbers[0], myNumbers[1]));
+
+    printf("%hd / %hd = %hd\n", myNumbers[3], myNumbers[1], division(myNumbers[0], myNumbers[1])); // Integer division
+    printf("The sum of all numbers between %hd and %hd is %hd\n", 13, 27, rangeSum(13, 27)); // 13 + 14 + 15 + ... + 27
+
+}
+
+void mathy() {
+
+    /*
+    IMPORTANT:
+    When compiling the program, you need to link the math library.
+    This is because the math library is not included in the standard C library.
+    
+    The command to compile the program is:
+    gcc -o mz mz.c -lm
+
+    The -lm flag is used to link the math library to the program.
+    */
+
+    printf("Square root of 25: %f\n", sqrt(25));
+    printf("Absolute value of 17: %f\n", sqrt(17));
+
+    float bob = 1.4;
+
+    printf("Ceiling of 1.4: %f\n", ceil(bob));
+    printf("Floor of 1.4: %f\n", floor(bob));
+
+    short a = 32, b = 4;
+    printf("%hd to the power of %hd: %f\n", a, b, pow(a, b));
+
+    // And there are a lot of math functions, including trigonometric functions, logarithmic functions, etc.
+    // The standard stuff you would expect from a math library.
 }
 
 int main() {
@@ -347,15 +476,43 @@ int main() {
     pointy();
     strengu();
     userinput();
+    pointz();
+    functions();
+    mathy();
     */
 
-    memz();
 
 
+    // Must a kernel be "re-programmed" for each new processor it wants to support (processors with different ISAs)?
+    // With the 
 
     return 0;
 }
 
+short division(short a, short b) {
+    // Calculates the result of a divided by b
+    return a / b;
+}
+
+short rangeSum(short a, short b) {
+    /*
+    Just an example of something which can be done recursively
+    In this case, it would be more efficient to either use a for loop, or even better,
+    the formula for the sum of an arithmetic series.
+    
+    Calculates the sum of all numbers between a and b (inclusive)
+    */
+    short sum = 0;
+    if (b < a) {
+        return -1;
+    }
+    
+    if (a == b) {
+        return a;
+    } else {
+        return a + rangeSum(a + 1, b);
+    }
+}
 
 /*
 COMMENTS:

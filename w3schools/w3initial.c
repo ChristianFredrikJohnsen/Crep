@@ -3,6 +3,10 @@
 #include <stdbool.h>
 #include <string.h>
 
+/**
+ * Much of this code was written on my laptop, and then sent to git at a later stage.
+ * Was unsure at the beginning if git would work with WSL, so desktop and laptop were kept separate initially.
+*/
 
 void pint(const char* description, int value) {
     printf("%s: %d\n", description, value);
