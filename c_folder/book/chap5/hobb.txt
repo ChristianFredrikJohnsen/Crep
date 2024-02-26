@@ -1,0 +1,12 @@
+foo
+boo
+do
+loo
+moo
+foo
+boo
+foo
+foo foo foo foo
+
+// Write command 'grep -o foo hobb.txt | wc -l' to count the number of lines containing 'foo' in the file hobb.txt
+// Grep means "Global Regular Expression Print"
